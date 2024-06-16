@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Message{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+<form action="message" class="centered-form">
+    <body>
+        <div id="panel_7" style="text-align: center;">
+            <div>
+                <h2 style="margin-top: 6rem; margin-bottom: 0rem; padding: 1rem;">{{ message }}</h2>
+            </div>
+                <p style="color: #516172;">Return back to main page 
+                    <a href="/" style="color: rgb(94, 94, 238); text-decoration: none;">Home.</a>
+                </p>
+            </div>
+    </body>
+</form>
+{% endblock %}

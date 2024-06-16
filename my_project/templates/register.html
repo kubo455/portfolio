@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Log In{% endblock %}
+
+{% block content %}
+    <form action="register" method="post" class="register-form">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="form-group">
+            <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password">
+        </div>
+        <div class="form-group">
+            <input class="form-control mx-auto w-auto" name="confirmation" placeholder="Confirm password" type="password">
+        </div>
+        <button class="important" type="submit" style="font-size: 20px;" value="register">Register</button>
+        <p style="color: #516172;">If you have account already sign in here <a href="/login" style="color: rgb(94, 94, 238); text-decoration: none;">login.</a></p>
+    </form>
+{% endblock %}

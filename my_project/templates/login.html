@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Log In{% endblock %}
+{% block content %}
+    <form action="login" method="post" class="login-form">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username" placeholder="Username" type="text">
+        </div>
+        <div class="form-group">
+            <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="important" type="submit" style="font-size: 20px;" value="login" style="position: absolute; left: 50%; top:50%;">Log in</button>
+        <p style="color: #516172;">If you do not have created account yet please register first here 
+            <a href="/register" style="color: rgb(94, 94, 238); text-decoration: none;">register.</a>
+        </p>
+    </form>
+{% endblock %}

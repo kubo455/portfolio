@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Settings{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+<body>
+    <form action="settings" method="post" class="centered-form">
+            <div id="panel_9" style="padding: 10px;">
+                <div class="content">
+                    <h2 style="color: #ffffff; font-size: 23px; margin-top: 0rem; margin-bottom: 0rem;">Change password</h2>
+                </div>
+                <div class="content">
+                    <input autocomplete="off" style="font-size: 15px;" autofocus class="form-control mx-auto w-auto" name="new_password" id="new_password" placeholder="New password" type="password">
+                </div>
+                <div class="content">
+                    <input class="form-control mx-auto w-auto" style="font-size: 15px;" name="password_confirmation" id="password_confirmation" placeholder="Password confiromation" type="password">
+                </div>
+                <div class="content">
+                    <!-- Toggle between password visibility -->
+                    <input class="form-control mx-auto w-auto" type="checkbox" onclick="myFunction()">Show Password 
+                </div>
+                <div class="content">
+                    <input class="form-control mx-auto w-auto" style="font-size: 14px;" name="old_password" id="old_password" placeholder="Confirm with old password" type="password">
+                </div>
+                <div class="content">
+                    <button class="important" type="submit" style="font-size: 15px; padding: 8px; width: 80px; text-align: center;" id="submit_button" value="submit">Submit</button> 
+                </div>
+            </div>
+    </form>
+
+    <form action="settings" method="post" class="centered-form">
+        <div id="panel_8">
+            <div class="content">
+                <h2 style="color: #ffffff; margin-top: 0.7rem; margin-bottom: 0rem;">Add new expence type</h2>
+            </div>
+            <div class="content">
+                <input style="font-size: 15px; text-align: center; padding-left: 5px; width: 180px;" autocomplete="off" name="add_type" placeholder="Expence type" type="text">
+            </div>
+            <div class="content">
+                <button class="important" type="submit" value="add_expences" style="font-size: 15px; padding: 8px;">Add expence</button>
+            </div>  
+        </div>
+    </form>
+        <script>
+            document.getElementById('dateInput').valueAsDate = new Date();
+        </script>
+        <script>
+            // Function to toggle between visibility of password
+            function myFunction() {
+                var x = document.getElementById("new_password");
+                var y = document.getElementById("password_confirmation");
+                if (x.type === "password") {
+                    x.type = "text";
+                    y.type = "text";
+                } else {
+                    x.type = "password";
+                    y.type = "password";
+                }
+            } 
+        </script>
+</body>
+{% endblock %}

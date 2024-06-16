@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css"/>
+    <title>{% block title %}{% endblock %} - Expence Tracker</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    {% endblock %}
+</head>
+
+<body>
+    <div id="panel">
+        <h1 style="size: 15px;">Expence tracker</h1>
+        {% if session["user_id"] %}
+            <form action="/logout" method="get">
+                <button type="submit" class="right-align">Log out</button>
+            </form>
+        {% endif %}
+    </div>
+    {% if session["user_id"] %}
+    <div class="container">
+        <nav id="panel_1">
+            <button class="important" style="padding-left: 1rem;" type="submit" onclick="redirect('/')"><i class="bi bi-house">Home</i></button>
+            <button class="important" style="padding-left: 1rem;" type="submit" onclick="redirect('/settings')"><i class="bi bi-gear">Manage expences/settings</i></button>
+        </nav>
+        <script>
+            // Redirect user to another location
+            function redirect(url) {
+                window.location.href = url;
+            }
+        </script>
+    </div>  
+    {% endif %}
+    <div id="content">{% block content %}{% endblock %}</div>
+    {% if session["user_id"] %}
+    <div id="footer">
+        {% block footer %}
+        &copy; Copyright 2024 by Jakub Gasso.
+        {% endblock %}
+    </div>
+    {% endif %}
+</body>
+</html>

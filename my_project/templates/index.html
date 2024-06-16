@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% block title %}Log in{% endblock %}
+{% block head %}
+    {{ super() }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+{% block content %}
+    <body>
+        <div id="panel_2">
+            <h1 style="padding-left: 20px; padding-top: 5px; font-size: 18px;">Total expences and income</h1>
+
+            <!-- CHART for tracing income and expences -->
+            <!-- I used Chat-GPT here to help me with style of chart -->
+            <div>
+                <canvas id="myChart"></canvas>
+            </div>
+            <script>
+                const ctxPie = document.getElementById('myChart').getContext('2d');
+                const PieChart = new Chart(ctxPie, {
+                  type: 'pie',
+                  data: {
+                    labels: ['Expences', 'Income'],
+                    datasets: [{
+                      label: '$',
+                      data: {{ data | safe }},
+                      backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)'
+                      ],
+                      hoverOffset: 4
+                    }]
+                  },
+                  options: {
+                    plugins: {
+                      tooltip: {
+                        bodyFont: {
+                          size: 18
+                        },
+                        titleFont: {
+                          size: 18
+                        }
+                      },
+                      legend: {
+                        labels: {
+                          font: {
+                            size: 20
+                          },
+                          color: 'rgb(255, 255, 255)'
+                        }
+                      }
+                    }
+                  }
+                });
+              </script>
+        </div>
+
+        <div id="panel_3">
+            <h1 style="padding-left: 20px; padding-top: 5px; font-size: 18px;">Add expence</h1>
+            <form action="/" method="post" class="centered-form">
+              <div class="content" style="margin-top: 4rem;">
+                  <select class="form-select form-select-lg mb-3" aria-label="Default select example" name="expence_type">
+                      <option disabled selected>Open select menu</option>
+                      {% for expence in def_type %}
+                          <option>{{ expence }}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+              <div class="content">
+                  <input style="font-size: 13px; text-align: left; padding-left: 5px; width: 130px;" autocomplete="off" name="sum" placeholder="Sum" type="text">
+              </div>
+              <div class="content">
+                  <input style="font-size: 13px; text-align: left; padding-left: 5px; width: 130px;"  name="date" type="date" id = "dateInput">
+              </div>
+              <div class="content">
+                  <button class="important" type="submit" value="add_expences">Add expence</button>
+              </div>  
+          </form>   
+        </div>
+        
+        <!-- Set users date input to default today date -->
+        <script>
+            document.getElementById('dateInput').valueAsDate = new Date();
+        </script>
+
+        <div id="panel_5">
+            <h1 style="padding-left: 20px; padding-top: 5px; font-size: 18px;">Budget</h1>
+              <form action="/" method="post" class="centered-form">
+                <body>
+                    <div style="margin-top: 3rem; text-align: center;">
+                        <h2 style="color: #ffffff; font-size: 18px;">Your budget:</h2>
+                        <h2 style="color: #ffffff; font-size: 18px;">${{ balance }}</h2>
+                        <p style="padding-left: 0px; font-size: 18px;">Add new balance here</p>
+                        <div class="content">
+                          <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="balance" id="userInput"
+                            placeholder="Add balance" type="number " style="font-size: 13px; width: 100px;">
+                        </div>  
+                        <button class="important" type="submit" style="font-size: 13px; padding: 8px;" value="balance">Submit</button>   
+                    </div>
+                </body>
+              </form>
+        </div>
+
+        <div id="panel_4">
+          <h1 style="padding-left: 20px; padding-top: 5px; font-size: 18px;">Last spendings</h1>
+            <table style="position: absolute; top:5.5%; left: 3.5%">
+              <tr>
+                <th>Expence</th>
+                <th>Amount</th>
+                <th>Date</th>
+              </tr>
+              <!-- With help of Chat-GPT I find out how to create this table with a loop -->
+                {% set n = 15 %}
+                {% for expence in expences|reverse %}
+                    {% if expence[3] is none %}
+                        {% set n = n + 1 %}
+                    {% else %}
+                        {% if loop.index <= 15 %}
+                            <tr>
+                                <td>{{ expence[1] }}</td>
+                                <td>$ {{ expence[2] }}</td>
+                                <td>{{ expence[3] }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        
+        <!-- CHART for expences -->
+        <div id="panel_10">
+          <div>
+              <canvas id="myChart_1"></canvas>
+          </div>
+          <script>
+            const ctxPie_1 = document.getElementById('myChart_1').getContext('2d');
+            const PieChart_1 = new Chart(ctxPie_1, {
+              type: 'doughnut',
+              data: {
+                labels: {{ exp_labels | safe }},
+                datasets: [{
+                  label: 'Percentage %',
+                  data: {{ exp_values | safe }},
+                  backgroundColor: {{ chart_colors | safe }},
+                  hoverOffset: 4
+                }]
+              },
+              options: {
+                plugins: {
+                  title: {
+                    display: true,
+                    text: "Total expences",
+                    font: {
+                      size: 20
+                    },
+                    color: 'rgb(255, 255, 255)'
+                  },
+                  legend: {
+                    labels: {
+                      font: {
+                        size: 15
+                      },
+                      color: 'rgb(255, 255, 255)'
+                    }
+                  }
+                }
+              }
+            });
+          </script>
+        </div>
+  </body>
+{% endblock %}
